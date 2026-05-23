@@ -35,14 +35,11 @@ func main() {
 				fmt.Println(argument + " is a shell builtin")
 			} else {
 				path, err := exec.LookPath(argument)
-				if err != nil {
-					fmt.Fprintln(os.Stderr, "Error reading PATH:", err)
-					os.Exit(1)
+				if err == nil {
+					fmt.Println(argument + " is " + path)
 				} else {
-				 fmt.Println(argument + " is " + path)
-				 continue
+				 fmt.Println(argument + ": not found")
 				}
-				fmt.Println(argument + ": not found")
 			}
 			continue
 
