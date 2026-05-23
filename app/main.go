@@ -11,6 +11,14 @@ import (
 
 var builtins = []string{"exit", "echo", "type"}
 
+func findExecutablePath(argument string) string {
+	path, err := exec.LookPath(argument)
+	if err == nil {
+		return path
+	} else {
+		return ""
+	}
+}
 func main() {
 	for {
 		fmt.Print("$ ")
@@ -34,28 +42,22 @@ func main() {
 			if slices.Contains(builtins, argument) {
 				fmt.Println(argument + " is a shell builtin")
 			} else {
-				path, err := exec.LookPath(argument)
-				if err == nil {
-					fmt.Println(argument + " is " + path)
+				// path, err := exec.LookPath(argument)
+				// if err == nil {
+				// 	fmt.Println(argument + " is " + path)
+				// } else {
+				//  fmt.Println(argument + ": not found")
+				// }
+				path := findExecutablePath(argument)
+				if path == "" {
+					fmt.Println(argument + ": not found")
 				} else {
-				 fmt.Println(argument + ": not found")
+					fmt.Println(argument + " is " + path)
 				}
 			}
 			continue
-
-			/*
-			When type receives a command input, your shell must follow these steps:
-
-			[DONE] Check if the command is a builtin command (like exit or echo). If it is, report it as a builtin (<command> is a shell builtin) and stop.
-			
-			If the command is not a builtin, your shell must go through every directory in PATH. For each directory:
-				Check if a file with the command name exists.
-				Check if the file has execute permissions.
-				If the file exists and has execute permissions, print <command> is <full_path> and stop.
-				If the file exists but lacks execute permissions, skip it and continue to the next directory.
-				[DONE] If no executable is found in any directory, print <command>: not found.
-			*/
 		}
+
 
 		fmt.Println(command + ": command not found")
 	}
