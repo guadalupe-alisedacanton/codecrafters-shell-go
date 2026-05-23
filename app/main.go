@@ -21,7 +21,6 @@ func main() {
 		if command == "exit" {
 			break
 		}
-		fmt.Println(command)
 		if strings.HasPrefix(command, "echo ") {
 			fmt.Println(command[5:])
 		}
