@@ -55,7 +55,7 @@ func main() {
 			}
 			continue
 		} else if strings.HasPrefix(command, "cd ") {
-			argument := command[5:]
+			argument := command[3:]
 			fmt.Println(argument)
 			err := os.Chdir(argument)
 			if err != nil {
