@@ -61,7 +61,9 @@ func main() {
 		customCommand := arguments[0]
 		path := findExecutablePath(customCommand)
 		if path != "" {
+			fmt.Println("Program was passed " + len(arguments) - 1 + " args (including program name).")
 			exec.Command(customCommand, arguments[1:]...)
+			continue
 		}
 
 		fmt.Println(command + ": command not found")
