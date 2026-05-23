@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var builtins = []string{"exit", "echo", "type", "pwd"}
+var builtins = []string{"exit", "echo", "type", "pwd", "cd"}
 
 func findExecutablePath(argument string) string {
 	path, err := exec.LookPath(argument)
@@ -54,7 +54,14 @@ func main() {
 				}
 			}
 			continue
-		} 
+		} else if strings.HasPrefix(command, "cd ") {
+			argument := command[5:]
+			err := os.Chdir(argument)
+			if err != nil {
+				fmt.Println("cd: " + argument + ": No such file or directory")
+			}
+			continue
+		}
 		arguments := strings.Fields(command)
 		customCommand := arguments[0]
 		path := findExecutablePath(customCommand)
