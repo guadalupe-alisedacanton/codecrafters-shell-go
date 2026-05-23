@@ -62,6 +62,8 @@ func main() {
 		path := findExecutablePath(customCommand)
 		if path != "" {
 			cmd := exec.Command(customCommand, arguments[1:]...)
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
 			cmd.Run()
 			continue
 		}
