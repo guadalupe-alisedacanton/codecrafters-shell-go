@@ -24,25 +24,30 @@ func main() {
 		fmt.Print("$ ")
 
 		// Captures the user's command in the "command" variable
-		command, err := bufio.NewReader(os.Stdin).ReadString('\n')
+		input, err := bufio.NewReader(os.Stdin).ReadString('\n')
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading input:", err)
 			os.Exit(1)
 		}
-		command = command[:len(command)-1]
-		if command == "exit" {
+		strippedInput := input[:len(input)-1]
+		inputs := strings.Fields(strippedInput)
+		command := inputs[0]
+		arguments := inputs[1:]
+
+		switch command {
+		case "exit":
 			break
-		} else if command == "pwd" {
+		case "pwd":
 			path, err := os.Getwd()
 			if err == nil {
 				fmt.Println(path)
 			}
 			continue
-		} else if strings.HasPrefix(command, "echo ") {
+		case "echo":
 			fmt.Println(command[5:])
 			continue
-		} else if strings.HasPrefix(command, "type ") {
-			argument := command[5:]
+		case "type":
+			argument := arguments[0]
 			if slices.Contains(builtins, argument) {
 				fmt.Println(argument + " is a shell builtin")
 			} else {
@@ -54,25 +59,68 @@ func main() {
 				}
 			}
 			continue
-		} else if strings.HasPrefix(command, "cd ") {
-			argument := command[3:]
+		case "cd":
+			argument := arguments[0]
 			err := os.Chdir(argument)
 			if err != nil {
 				fmt.Println("cd: " + argument + ": No such file or directory")
 			}
 			continue
-		}
-		arguments := strings.Fields(command)
-		customCommand := arguments[0]
-		path := findExecutablePath(customCommand)
-		if path != "" {
-			cmd := exec.Command(customCommand, arguments[1:]...)
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Run()
-			continue
+		default:
+			path := findExecutablePath(command)
+			if path != "" {
+				cmd := exec.Command(command, arguments...)
+				cmd.Stdout = os.Stdout
+				cmd.Stderr = os.Stderr
+				cmd.Run()
+				continue
+			}
 		}
 		fmt.Println(command + ": command not found")
+
+		// if command == "exit" {
+		// 	break
+		// } else if command == "pwd" {
+		// 	path, err := os.Getwd()
+		// 	if err == nil {
+		// 		fmt.Println(path)
+		// 	}
+		// 	continue
+		// } else if strings.HasPrefix(command, "echo ") {
+		// 	fmt.Println(command[5:])
+		// 	continue
+		// } else if strings.HasPrefix(command, "type ") {
+		// 	argument := command[5:]
+		// 	if slices.Contains(builtins, argument) {
+		// 		fmt.Println(argument + " is a shell builtin")
+		// 	} else {
+		// 		path := findExecutablePath(argument)
+		// 		if path != "" {
+		// 			fmt.Println(argument + " is " + path)
+		// 		} else {
+		// 			fmt.Println(argument + ": not found")
+		// 		}
+		// 	}
+		// 	continue
+		// } else if strings.HasPrefix(command, "cd ") {
+		// 	argument := command[3:]
+		// 	err := os.Chdir(argument)
+		// 	if err != nil {
+		// 		fmt.Println("cd: " + argument + ": No such file or directory")
+		// 	}
+		// 	continue
+		// }
+		// arguments := strings.Fields(command)
+		// customCommand := arguments[0]
+		// path := findExecutablePath(customCommand)
+		// if path != "" {
+		// 	cmd := exec.Command(customCommand, arguments[1:]...)
+		// 	cmd.Stdout = os.Stdout
+		// 	cmd.Stderr = os.Stderr
+		// 	cmd.Run()
+		// 	continue
+		// }
+		// fmt.Println(command + ": command not found")
 
 	}
 
