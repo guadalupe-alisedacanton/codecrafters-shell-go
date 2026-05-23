@@ -32,6 +32,7 @@ func main() {
 			argument := command[5:]
 			if slices.Contains(builtins, argument) {
 				fmt.Println(argument + " is a shell builtin")
+				continue
 			}
 			fmt.Println(argument + ": not found")
 			continue
