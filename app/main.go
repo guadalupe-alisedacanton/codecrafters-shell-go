@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var builtins = []string{"exit", "echo", "type"}
+var builtins = []string{"exit", "echo", "type", "pwd"}
 
 func findExecutablePath(argument string) string {
 	path, err := exec.LookPath(argument)
