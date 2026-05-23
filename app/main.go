@@ -56,6 +56,7 @@ func main() {
 			continue
 		} else if strings.HasPrefix(command, "cd ") {
 			argument := command[5:]
+			fmt.Println(argument)
 			err := os.Chdir(argument)
 			if err != nil {
 				fmt.Println("cd: " + argument + ": No such file or directory")
