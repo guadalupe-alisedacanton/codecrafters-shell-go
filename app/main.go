@@ -36,7 +36,7 @@ func main() {
 
 		switch command {
 		case "exit":
-			break
+			return
 		case "pwd":
 			path, err := os.Getwd()
 			if err == nil {
