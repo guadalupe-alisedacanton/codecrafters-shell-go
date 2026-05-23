@@ -40,6 +40,7 @@ func main() {
 					os.Exit(1)
 				} else {
 				 fmt.Println(argument + " is " + path)
+				 continue
 				}
 				fmt.Println(argument + ": not found")
 			}
