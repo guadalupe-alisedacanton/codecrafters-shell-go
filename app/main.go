@@ -37,6 +37,7 @@ func main() {
 			if err != nil {
 				fmt.Println(path)
 			}
+			continue
 		} else if strings.HasPrefix(command, "echo ") {
 			fmt.Println(command[5:])
 			continue
