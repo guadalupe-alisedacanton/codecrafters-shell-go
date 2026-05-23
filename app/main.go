@@ -32,22 +32,14 @@ func main() {
 		command = command[:len(command)-1]
 		if command == "exit" {
 			break
-		}
-		if strings.HasPrefix(command, "echo ") {
+		} else if strings.HasPrefix(command, "echo ") {
 			fmt.Println(command[5:])
 			continue
-		}
-		if strings.HasPrefix(command, "type ") {
+		} else if strings.HasPrefix(command, "type ") {
 			argument := command[5:]
 			if slices.Contains(builtins, argument) {
 				fmt.Println(argument + " is a shell builtin")
 			} else {
-				// path, err := exec.LookPath(argument)
-				// if err == nil {
-				// 	fmt.Println(argument + " is " + path)
-				// } else {
-				//  fmt.Println(argument + ": not found")
-				// }
 				path := findExecutablePath(argument)
 				if path != "" {
 					fmt.Println(argument + " is " + path)
@@ -56,6 +48,8 @@ func main() {
 				}
 			}
 			continue
+		} else if command == "pwd" {
+
 		}
 		arguments := strings.Fields(command)
 		customCommand := arguments[0]
@@ -66,9 +60,9 @@ func main() {
 			cmd.Stderr = os.Stderr
 			cmd.Run()
 			continue
+		} else {
+			fmt.Println(command + ": command not found")
 		}
-
-		fmt.Println(command + ": command not found")
 	}
 
 }
