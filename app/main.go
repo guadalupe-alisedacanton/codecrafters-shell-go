@@ -34,7 +34,7 @@ func main() {
 				fmt.Println(argument + " is a shell builtin")
 				continue
 			}
-			fmt.Println(argument + ": command not found")
+			fmt.Println(argument + ": not found")
 		}
 
 		fmt.Println(command + ": command not found")
