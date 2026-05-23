@@ -49,15 +49,20 @@ func main() {
 				//  fmt.Println(argument + ": not found")
 				// }
 				path := findExecutablePath(argument)
-				if path == "" {
-					fmt.Println(argument + ": not found")
-				} else {
+				if path != "" {
 					fmt.Println(argument + " is " + path)
+				} else {
+					fmt.Println(argument + ": not found")
 				}
 			}
 			continue
 		}
-
+		arguments := strings.Fields(command)
+		customCommand := arguments[0]
+		path := findExecutablePath(customCommand)
+		if path != "" {
+			exec.Command(customCommand, arguments[1:]...)
+		}
 
 		fmt.Println(command + ": command not found")
 	}
