@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
 	"slices"
 	"strings"
-	"os/exec"
 )
 
 var builtins = []string{"exit", "echo", "type"}
@@ -61,8 +61,8 @@ func main() {
 		customCommand := arguments[0]
 		path := findExecutablePath(customCommand)
 		if path != "" {
-			fmt.Println("Program was passed " + len(arguments) - 1 + " args (including program name).")
-			exec.Command(customCommand, arguments[1:]...)
+			cmd := exec.Command(customCommand, arguments[1:]...)
+			cmd.Run()
 			continue
 		}
 
