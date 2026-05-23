@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -20,7 +21,10 @@ func main() {
 		if command == "exit" {
 			break
 		}
-		
+		if strings.HasPrefix(command, "echo ") {
+			fmt.Println(command[5:])
+		}
+
 		fmt.Println(command + ": command not found")
 	}
 
