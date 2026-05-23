@@ -34,7 +34,7 @@ func main() {
 			break
 		} else if command == "pwd" {
 			path, err := os.Getwd()
-			if err != nil {
+			if err == nil {
 				fmt.Println(path)
 			}
 			continue
