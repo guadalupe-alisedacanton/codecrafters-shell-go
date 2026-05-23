@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const builtins = [3]string{"exit", "echo", "type"}
+var builtins = [3]string{"exit", "echo", "type"}
 
 func main() {
 	for {
