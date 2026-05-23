@@ -44,7 +44,7 @@ func main() {
 			}
 			continue
 		case "echo":
-			fmt.Println(command[5:])
+			fmt.Println(strings.Join(arguments, " "))
 			continue
 		case "type":
 			argument := arguments[0]
