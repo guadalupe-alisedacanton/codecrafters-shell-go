@@ -32,6 +32,11 @@ func main() {
 		command = command[:len(command)-1]
 		if command == "exit" {
 			break
+		} else if command == "pwd" {
+			path, err := os.Getwd()
+			if err != nil {
+				fmt.Println(path)
+			}
 		} else if strings.HasPrefix(command, "echo ") {
 			fmt.Println(command[5:])
 			continue
@@ -48,12 +53,7 @@ func main() {
 				}
 			}
 			continue
-		} else if command == "pwd" {
-			path, err := os.Getwd()
-			if err != nil {
-				fmt.Println(path)
-			}
-		}
+		} 
 		arguments := strings.Fields(command)
 		customCommand := arguments[0]
 		path := findExecutablePath(customCommand)
