@@ -49,7 +49,10 @@ func main() {
 			}
 			continue
 		} else if command == "pwd" {
-
+			path, err := os.Getwd()
+			if err != nil {
+				fmt.Println(path)
+			}
 		}
 		arguments := strings.Fields(command)
 		customCommand := arguments[0]
@@ -60,9 +63,9 @@ func main() {
 			cmd.Stderr = os.Stderr
 			cmd.Run()
 			continue
-		} else {
-			fmt.Println(command + ": command not found")
 		}
+		fmt.Println(command + ": command not found")
+
 	}
 
 }
